@@ -1,38 +1,36 @@
 package algoritmo;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class OperacoesGeneticas {
-	private static Random random = new Random();
 
-	public static Cromossomo crossover(Cromossomo pai1, Cromossomo pai2) {
-		int tamanho = pai1.getGenes().length;
-		Cromossomo filho = new Cromossomo(tamanho);
+    public static Individuo crossover(Individuo pai1, Individuo pai2) {
+        List<Integer> genesPai1 = pai1.getGenes();
+        List<Integer> genesPai2 = pai2.getGenes();
+        int tamanho = genesPai1.size();
 
-		int pontoCorte = random.nextInt(tamanho);
-		for (int i = 0; i < pontoCorte; i++) {
-			filho.getGenes()[i] = pai1.getGenes()[i];
-		}
-		for (int i = pontoCorte; i < tamanho; i++) {
-			filho.getGenes()[i] = pai2.getGenes()[i];
-		}
+        List<Integer> genesFilho = new ArrayList<>(tamanho);
+        int pontoCorte = ThreadLocalRandom.current().nextInt(tamanho);
 
-		return filho;
-	}
+        for (int i = 0; i < tamanho; i++) {
+            if (i < pontoCorte) {
+                genesFilho.add(genesPai1.get(i));
+            } else {
+                genesFilho.add(genesPai2.get(i));
+            }
+        }
 
-	public static Cromossomo mutacao(Cromossomo individuo) {
-		int tamanho = individuo.getGenes().length;
-		Cromossomo filhoMutado = new Cromossomo(tamanho);
+        return new Individuo(genesFilho);
+    }
 
-		int posicaoMutacao = random.nextInt(tamanho);
-		for (int i = 0; i < tamanho; i++) {
-			if (i == posicaoMutacao) {
-				filhoMutado.getGenes()[i] = random.nextBoolean() ? 1 : 0;
-			} else {
-				filhoMutado.getGenes()[i] = individuo.getGenes()[i];
-			}
-		}
+    public static Individuo mutacao(Individuo individuo) {
+        List<Integer> genes = individuo.getGenes();
+        int posicaoMutacao = ThreadLocalRandom.current().nextInt(genes.size());
 
-		return filhoMutado;
-	}
+        genes.set(posicaoMutacao, genes.get(posicaoMutacao) == 1 ? 0 : 1);
+
+        return individuo;
+    }
 }
