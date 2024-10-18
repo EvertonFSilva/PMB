@@ -89,10 +89,8 @@ public class AlgoritmoGenetico {
 
 	private void avaliarPopulacao(List<Individuo> populacao) {
 		populacao.parallelStream().forEach(individuo -> {
-			if (individuo.getAptidao() == 0) {
-				individuo.setMochila(new Mochila(mochila.getCapacidade()));
-				individuo.setAptidao(Aptidao.calcularAptidao(individuo, mochila.getItens()));
-			}
+			individuo.setMochila(new Mochila(mochila.getCapacidade()));
+			individuo.setAptidao(Aptidao.calcularAptidao(individuo, mochila.getItens()));
 		});
 	}
 
@@ -111,15 +109,14 @@ public class AlgoritmoGenetico {
 	}
 
 	public void exibirMochila() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("Capacidade da Mochila: ").append(mochila.getCapacidade()).append("\n");
-	    sb.append("Itens:\n");
+		StringBuilder sb = new StringBuilder();
+		sb.append("Capacidade da Mochila: ").append(mochila.getCapacidade()).append("\n");
+		sb.append("Itens:\n");
 
-	    mochila.getItens().forEach(item -> 
-	        sb.append("Valor: ").append(item.getGanho()).append(", Peso: ").append(item.getPeso()).append("\n")
-	    );
+		mochila.getItens().forEach(item -> sb.append("Valor: ").append(item.getGanho()).append(", Peso: ")
+				.append(item.getPeso()).append("\n"));
 
-	    System.out.println(sb.toString());
+		System.out.println(sb.toString());
 	}
 
 	public void exibirResultadoMelhorSolucao(Individuo melhorIndividuo) throws IOException {
@@ -143,6 +140,7 @@ public class AlgoritmoGenetico {
 
 		sb.append("\nGanho Total: ").append(ganhoTotal).append(", Peso Total: ").append(pesoTotal);
 		System.out.println(sb.toString());
-		ManipuladorArquivo.escreverResultado("C:\\\\Users\\\\evert\\\\Documents\\\\pmb\\\\resultado.txt", ganhoTotal, pesoTotal, genes);
+		ManipuladorArquivo.escreverResultado("C:\\\\Users\\\\evert\\\\Documents\\\\pmb\\\\resultado.txt", ganhoTotal,
+				pesoTotal, genes);
 	}
 }

@@ -13,10 +13,10 @@ public class Main {
 
         try {
             Mochila mochila = ManipuladorArquivo.lerDeArquivo(arquivoEntrada);
-            int numeroGeracoes = 100;
+            int numeroGeracoes = 1000;
 
             AlgoritmoGenetico ag = new AlgoritmoGenetico(mochila, numeroGeracoes);
-    //        ag.exibirMochila();
+            ag.exibirMochila();
             
             Individuo melhorIndividuo = ag.executar();
             ag.exibirResultadoMelhorSolucao(melhorIndividuo);
